@@ -1,21 +1,14 @@
-# render.yaml - Versión Corregida
+# render.yaml - Versión 100% Limpia
 
 services:
-  # 1. El Servidor Web (Tu app Symfony)
   - type: web
     name: mi-app-symfony
-    plan: free # Usa la capa gratuita
-    # Render auto-detecta PHP por el composer.json (no se pone "env: php")
+    plan: free
     buildCommand: |
-      # 1. Instala dependencias de PHP
       composer install --no-dev --optimize-autoloader --no-scripts
-      # 2. Instala dependencias de JS (Webpack)
       npm install
-      # 3. Compila tus assets
       npm run build
-      # 4. Limpia la caché (ahora es seguro)
       php bin/console cache:clear --env=prod
-      # 5. Ejecuta las migraciones (crea las tablas)
       php bin/console doctrine:migrations:migrate --env=prod --no-interaction --allow-no-migration
     startCommand: XDG_CONFIG_HOME=/var/app/config /usr/bin/heroku-php-apache2 public/
     envVars:
@@ -23,13 +16,11 @@ services:
         value: prod
       - key: DATABASE_URL
         fromDatabase:
-          name: mi-base-de-datos-pg # <--- Debe coincidir abajo
+          name: mi-base-de-datos-pg
           property: connectionString
 
 databases:
-  # 2. La Base de Datos PostgreSQL (Gratuita)
-  - name: mi-base-de-datos-pg # <--- El nombre que usas arriba
-    databaseName: piesaluddb_limpio # Puedes ponerle el nombre que quieras
+  - name: mi-base-de-datos-pg
+    databaseName: piesaluddb_limpio
     user: hermez382
     plan: free
-    # Nota: El plan gratuito SÓLO soporta PostgreSQL
