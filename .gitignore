@@ -1,20 +1,14 @@
-
-###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
-/var/
+# Symfony / Archivos de Entorno
 /vendor/
-###< symfony/framework-bundle ###
+/var/
+/node_modules/
+/public/build/
+.env
+.env.local
+.env.*.local
 
-###> phpunit/phpunit ###
-/phpunit.xml
-/.phpunit.cache/
-###< phpunit/phpunit ###
+# Archivos de AWS (los ignoramos)
+.ebextensions/
 
-###> symfony/asset-mapper ###
-/public/assets/
-/assets/vendor/
-###< symfony/asset-mapper ###
+# Archivos de sistema
+*.DS_Store
